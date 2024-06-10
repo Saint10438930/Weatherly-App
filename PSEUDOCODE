@@ -1,0 +1,130 @@
+SplashActivity:
+    OnCreate:
+        SetContentView(splash_screen_layout)
+        logo = FindViewById(logo_image)
+        appName = FindViewById(app_name_text)
+        author = FindViewById(author_text)
+        btnStart = FindViewById(start_button)
+        btnExit = FindViewById(exit_button)
+        
+        btnStart.OnClick:
+            Open(MainActivity)
+            Finish(SplashActivity)
+        
+        btnExit.OnClick:
+            CloseApp()
+
+MainActivity:
+    minTemps = [12, 15, 13, 16, 12, 12, 14]
+    maxTemps = [26, 28, 28, 32, 22, 24, 30]
+
+    OnCreate:
+        SetContentView(main_activity_layout)
+        avgTempText = FindViewById(avg_temp_text)
+        btnViewDetails = FindViewById(view_details_button)
+        btnClearData = FindViewById(clear_data_button)
+        btnExit = FindViewById(exit_button)
+
+        avgTemp = CalculateAverageTemp(minTemps, maxTemps)
+        avgTempText.SetText("Average Temperature: " + avgTemp + "°C")
+
+        btnViewDetails.OnClick:
+            Open(DetailActivity)
+        
+        btnClearData.OnClick:
+            Try:
+                ClearUserData()
+            Catch(Exception e):
+                ShowToast("Error clearing data: " + e.Message)
+
+        btnExit.OnClick:
+            CloseApp()
+
+    CalculateAverageTemp(minTemps, maxTemps):
+        totalTemp = Sum(minTemps) + Sum(maxTemps)
+        return totalTemp / (Length(minTemps) + Length(maxTemps))
+
+    ClearUserData:
+        // Clear user data implementation
+
+MainActivity:
+    minTemps = [12, 15, 13, 16, 12, 12, 14]
+    maxTemps = [26, 28, 28, 32, 22, 24, 30]
+
+    OnCreate:
+        SetContentView(main_activity_layout)
+        avgTempText = FindViewById(avg_temp_text)
+        btnViewDetails = FindViewById(view_details_button)
+        btnClearData = FindViewById(clear_data_button)
+        btnExit = FindViewById(exit_button)
+
+        avgTemp = CalculateAverageTemp(minTemps, maxTemps)
+        avgTempText.SetText("Average Temperature: " + avgTemp + "°C")
+
+        btnViewDetails.OnClick:
+            Open(DetailActivity)
+        
+        btnClearData.OnClick:
+            Try:
+                ClearUserData()
+            Catch(Exception e):
+                ShowToast("Error clearing data: " + e.Message)
+
+        btnExit.OnClick:
+            CloseApp()
+
+    CalculateAverageTemp(minTemps, maxTemps):
+        totalTemp = Sum(minTemps) + Sum(maxTemps)
+        return totalTemp / (Length(minTemps) + Length(maxTemps))
+
+    ClearUserData:
+        // Clear user data implementation
+
+DetailActivity:
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    minTemps = [12, 15, 13, 16, 12, 12, 14]
+    maxTemps = [26, 28, 28, 32, 22, 24, 30]
+    conditions = ["Sunny", "Sunny", "Sunny", "Sunny", "Partly Cloudy", "Sunny", "Sunny"]
+
+    OnCreate:
+        SetContentView(detail_activity_layout)
+        dailyDetails = FindViewById(daily_details_text)
+        btnBack = FindViewById(back_button)
+
+        details = ""
+        For i from 0 to Length(days)-1:
+            details += days[i] + ": Min Temp: " + minTemps[i] + "°C, Max Temp: " + maxTemps[i] + "°C, Condition: " + conditions[i] + "\n\n"
+        
+        dailyDetails.SetText(details)
+
+        btnBack.OnClick:
+            Finish(DetailActivity)
+MainActivity:
+    btnClearData.OnClick:
+        Try:
+            ClearUserData()
+        Catch(Exception e):
+            ShowToast("Error clearing data: " + e.Message)
+
+    ClearUserData:
+        // Implementation to clear user data
+
+SplashActivity:
+    btnStart.OnClick:
+        Open(MainActivity)
+        Finish(SplashActivity)
+    
+    btnExit.OnClick:
+        CloseApp()
+
+MainActivity:
+    btnViewDetails.OnClick:
+        Open(DetailActivity)
+    
+    btnExit.OnClick:
+        CloseApp()
+
+DetailActivity:
+    btnBack.OnClick:
+        Finish(DetailActivity)
+
